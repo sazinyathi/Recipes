@@ -1,0 +1,401 @@
+﻿
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Required Meta Tags Always Come First -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Title -->
+    <title>Nologostudios Recipes</title>
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="~/favicon.ico">
+
+    <!-- Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+
+    <!-- CSS Implementing Plugins -->
+    <link rel="stylesheet" href="~/front-dashboard-v1.1/dist/assets/css/vendor.min.css">
+    <link rel="stylesheet" href="~/front-dashboard-v1.1/dist/assets/vendor/icon-set/style.css">
+
+    <!-- CSS Front Template -->
+    <link rel="stylesheet" href="~/front-dashboard-v1.1/dist/assets/css/theme.min.css?v=1.0">
+    <link href="~/fontawesome-pro-5.15.2-web/css/all.min.css" rel="stylesheet" />
+    <link href="~/front-dashboard-v1.1/dist/assets/vendor/chart.js/dist/Chart.min.css" rel="stylesheet" />
+    @*<link href="~/front-dashboard-v1.1/dist/assets/vendor/datatables/media/css/jquery.dataTables.min.css" rel="stylesheet" />*@
+    @*<link rel="stylesheet" href="~/front-dashboard-v1.1/dist/assets/vendor/select2/dist/css/select2.min.css" />*@
+
+    <style>
+
+        .theme-Nologostudios-recipes-loader {
+            position: fixed;
+            z-index: 1031;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        #loading {
+            position: fixed;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            opacity: 0.7;
+            background-color: #fff;
+            z-index: 99;
+        }
+
+        #loading-image {
+            z-index: 100;
+        }
+    </style>
+</head>
+
+<body class="footer-offset">
+    <script src="~/front-dashboard-v1.1/dist/assets/vendor/hs-navbar-vertical-aside/hs-navbar-vertical-aside-mini-cache.js"></script>
+    <header id="header" class="navbar navbar-expand-xl navbar-fixed navbar-height navbar-flush navbar-container navbar-light">
+        <div class="js-mega-menu navbar-nav-wrap hs-menu-initialized hs-menu-horizontal">
+            <div class="navbar-brand-wrapper">
+                <!-- Logo -->
+                <a class="navbar-brand" href="@Url.Action("Index", "Home")" aria-label="Front">
+                    <img class="navbar-brand-logo" src="~/front-dashboard-v1.1/dist/assets/img/logo/nologostudios-logo.png" alt="Logo">
+                </a>
+
+                <!-- End Logo -->
+            </div>
+
+            <!-- Secondary Content -->
+            <div class="navbar-nav-wrap-content-right">
+                <!-- Navbar -->
+                <ul class="navbar-nav align-items-center flex-row">
+                 
+                    <li class="nav-item">
+                        <!-- Account -->
+                        <div class="hs-unfold">
+                            <a class="js-hs-unfold-invoker navbar-dropdown-account-wrapper" href="javascript:;" data-hs-unfold-options="{
+                 &quot;target&quot;: &quot;#accountNavbarDropdown&quot;,
+                 &quot;type&quot;: &quot;css-animation&quot;
+               }" data-hs-unfold-target="#accountNavbarDropdown" data-hs-unfold-invoker="">
+                                <div class="avatar avatar-sm avatar-circle">
+                                    <img class="avatar-img" src="~/front-dashboard-v1.1/dist/assets/img/160x160/img1.jpg" alt="Image Description">
+                                    <span class="btn-status btn-sm-status btn-status-success"></span>
+                                </div>
+                            </a>
+
+                            <div id="accountNavbarDropdown" class="hs-unfold-content dropdown-unfold dropdown-menu dropdown-menu-right navbar-dropdown-menu navbar-dropdown-account hs-unfold-content-initialized hs-unfold-css-animation animated hs-unfold-hidden" style="width: 16rem; animation-duration: 300ms;" data-hs-target-height="396.281" data-hs-unfold-content="" data-hs-unfold-content-animation-in="slideInUp" data-hs-unfold-content-animation-out="fadeOut">
+                                <div class="dropdown-item-text">
+                                    <div class="media align-items-center">
+                                        <div class="avatar avatar-sm avatar-circle mr-2">
+                                            <img class="avatar-img" src="~/front-dashboard-v1.1/dist/assets/img/160x160/img1.jpg" alt="Image Description">
+                                        </div>
+                                        <div class="media-body">
+                                            <span class="card-title h5">@User.FindFirst("Name").Value</span>
+                                            <h6 class="card-text">@User.FindFirst("Username").Value</h6>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="dropdown-divider"></div>
+
+                                <div class="dropdown-item">
+                                    <div class="media align-items-center">
+                                        <div class="avatar avatar-sm avatar-dark avatar-circle mr-2">
+                                            <span class="avatar-initials">@User.FindFirst("FirstName").Value.Substring(0, 1)</span>
+                                        </div>
+                                        <div class="media-body">
+                                            <span class="card-title h5">@User.FindFirst("FirstName").Value</span>
+                                            <h6 class="card-text">@User.FindFirst("Email").Value</h6>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="dropdown-divider"></div>
+
+                                <!-- Unfold -->
+                                <div class="hs-unfold w-100">
+                                    <a class="js-hs-unfold-invoker navbar-dropdown-submenu-item dropdown-item d-flex align-items-center" href="javascript:;"
+                                       data-hs-unfold-options='{
+                     "target": "#navSubmenuPagesAccountDropdown2",
+                     "event": "hover"
+                   }'>
+                                        <span class="text-truncate pr-2" title="Customization">Profile roles</span>
+                                        <i class="tio-chevron-right navbar-dropdown-submenu-item-invoker  ml-auto"></i>
+                                    </a>
+
+                                    <div id="navSubmenuPagesAccountDropdown2" class="hs-unfold-content hs-unfold-has-submenu dropdown-unfold dropdown-menu navbar-dropdown-sub-menu">
+                                        @{
+                                            var roleList = User.FindFirst("RoleName").Value.Split(',').ToList();
+                                        }
+                                        @foreach (var item in roleList)
+                                        {
+                                            <a class="dropdown-item" href="#">
+                                                <span class="text-truncate pr-2" title="Invite people">@item</span>
+                                            </a>
+                                        }
+                                    </div>
+                                </div>
+                                <!-- End Unfold -->
+
+
+
+                            </div>
+                        </div>
+                        <!-- End Account -->
+                    </li>
+
+
+
+
+                    <li class="nav-item">
+                        <!-- Toggle -->
+                        <button type="button" class="navbar-toggler btn btn-ghost-secondary rounded-circle collapsed" aria-label="Toggle navigation" aria-expanded="false" aria-controls="navbarNavMenu" data-toggle="collapse" data-target="#navbarNavMenu">
+                            <i class="tio-menu-hamburger"></i>
+                        </button>
+                        <!-- End Toggle -->
+                    </li>
+                </ul>
+                <!-- End Navbar -->
+            </div>
+            <!-- End Secondary Content -->
+            <!-- Navbar -->
+            <partial name="_LayoutMenu" />
+            <!-- End Navbar -->
+        </div>
+    </header>
+    <!-- ========== HEADER ========== -->
+    <!-- ========== END HEADER ========== -->
+    <!-- ========== MAIN CONTENT ========== -->
+    <!-- Navbar Vertical -->
+    <!-- End Navbar Vertical -->
+
+    @RenderBody()
+
+    <!-- ========== END MAIN CONTENT ========== -->
+    <!-- JS Plugins Init. -->
+    <script src="~/front-dashboard-v1.1/dist/assets/vendor/jquery/dist/jquery.min.js"></script>
+    <script src="~/front-dashboard-v1.1/dist/assets/vendor/datatables/media/js/jquery.dataTables.min.js"></script>
+    <script src="~/front-dashboard-v1.1/dist/assets/vendor/jquery-migrate/dist/jquery-migrate.min.js"></script>
+    <script src="~/front-dashboard-v1.1/dist/assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/front-dashboard-v1.1/dist/assets/js/theme.min.js"></script>
+    <script src="~/front-dashboard-v1.1/dist/assets/vendor/hs-mega-menu/dist/hs-mega-menu.min.js"></script>
+    <script src="~/front-dashboard-v1.1/dist/assets/vendor/datatables.net.extensions/select/select.min.js"></script>
+
+    <script src="~/front-dashboard-v1.1/dist/assets/vendor/select2/dist/js/select2.min.js"></script>
+    <script src="~/front-dashboard-v1.1/dist/assets/vendor/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/front-dashboard-v1.1/dist/assets/vendor/hs-form-search/dist/hs-form-search.min.js"></script>
+    <script src="~/front-dashboard-v1.1/dist/assets/vendor/flatpickr/dist/flatpickr.min.js"></script>
+    <!-- JS Front. -->
+    <script src="~/front-dashboard-v1.1/src/assets/js/hs.datatables.min.js"></script>
+    <script src="~/front-dashboard-v1.1/src/assets/js/hs.validation.min.js"></script>
+    <script src="~/front-dashboard-v1.1/dist/assets/vendor/hs-unfold/dist/hs-unfold.min.js"></script>
+    <script src="~/front-dashboard-v1.1/src/assets/js/hs.select2.js"></script>
+    <script src="~/front-dashboard-v1.1/src/assets/js/hs.flatpickr.js"></script>
+    <script src="~/front-dashboard-v1.1/src/assets/js/hs.datatables.js"></script>
+
+    @*<script src="~/front-dashboard-v1.1/dist/assets/vendor/@@fancyapps/fancybox/dist/jquery.fancybox.min.js"></script>*@
+
+    <script src="~/front-dashboard-v1.1/src/assets/js/hs.fancybox.js"></script>
+    <script src="~/front-dashboard-v1.1/dist/assets/vendor/datatables.net-buttons/js/dataTables.buttons.js"></script>
+    <script src="~/front-dashboard-v1.1/dist/assets/vendor/jszip/dist/jszip.min.js"></script>
+    <script src="~/front-dashboard-v1.1/dist/assets/vendor/pdfmake/build/pdfmake.min.js"></script>
+    <script src="~/front-dashboard-v1.1/dist/assets/vendor/pdfmake/build/vfs_fonts.js"></script>
+    <script src="~/front-dashboard-v1.1/dist/assets/vendor/datatables.net-buttons/js/buttons.html5.min.js"></script>
+    <script src="~/front-dashboard-v1.1/dist/assets/vendor/datatables.net-buttons/js/buttons.print.min.js"></script>
+    <script src="~/front-dashboard-v1.1/dist/assets/vendor/datatables.net-buttons/js/buttons.colVis.min.js"></script>
+    <script src="~/front-dashboard-v1.1/src/assets/js/hs.sortable.js"></script>
+    <script src="~/front-dashboard-v1.1/src/assets/vendor/hs-quantity-counter/dist/hs-quantity-counter.min.js"></script>
+    <script src="~/front-dashboard-v1.1/dist/assets/vendor/chart.js/dist/Chart.min.js"></script>
+    <script src="~/front-dashboard-v1.1/src/assets/js/hs.chartjs.js"></script>
+
+    <!-- JS Implementing Plugins -->
+
+
+    <script>
+        $(document).on('ready', function () {
+
+
+            // INITIALIZATION OF MEGA MENU
+            // =======================================================
+            var megaMenu = new HSMegaMenu($('.js-mega-menu'), {
+                desktop: {
+                    position: 'left'
+                }
+            }).init();
+
+
+            // INITIALIZATION OF FORM VALIDATION
+            // =======================================================
+            $('.js-validate').each(function () {
+                $.HSCore.components.HSValidation.init($(this));
+            });
+
+            // INITIALIZATION OF NAVBAR VERTICAL NAVIGATION
+            // =======================================================
+            //var sidebar = $('.js-navbar-vertical-aside').hsSideNav();
+
+
+            // INITIALIZATION OF TOOLTIP IN NAVBAR VERTICAL MENU
+            // =======================================================
+            $('.js-nav-tooltip-link').tooltip({ boundary: 'window' })
+
+            $(".js-nav-tooltip-link").on("show.bs.tooltip", function (e) {
+                if (!$("body").hasClass("navbar-vertical-aside-mini-mode")) {
+                    return false;
+                }
+            });
+
+            // INITIALIZATION OF QUANTITY COUNTER
+            // =======================================================
+            $('.js-quantity-counter').each(function () {
+                var quantityCounter = new HSQuantityCounter($(this)).init();
+            });
+
+            // INITIALIZATION OF UNFOLD
+            // =======================================================
+            $('.js-hs-unfold-invoker').each(function () {
+                var unfold = new HSUnfold($(this)).init();
+            });
+
+
+            // INITIALIZATION OF FORM SEARCH
+            // =======================================================
+            $('.js-form-search').each(function () {
+                new HSFormSearch($(this)).init()
+            });
+
+
+            // INITIALIZATION OF SELECT2
+            // =======================================================
+            $('.js-select2-custom').each(function () {
+                var select2 = $.HSCore.components.HSSelect2.init($(this));
+            });
+
+
+            // INITIALIZATION OF FLATPICKR
+            // =======================================================
+            $('.js-flatpickr').each(function () {
+                $.HSCore.components.HSFlatpickr.init($(this));
+            });
+
+
+            // INITIALIZATION OF DATATABLES
+            // =======================================================
+
+            var datatable = $.HSCore.components.HSDatatables.init($('#datatableWithCheckboxSelect'), {
+                select: {
+                    style: 'multi',
+                    selector: 'td:first-child input[type="checkbox"]',
+                    classMap: {
+                        checkAll: '#datatableWithCheckboxSelectAll',
+                        counter: '#datatableWithCheckboxSelectCounter',
+                        counterInfo: '#datatableWithCheckboxSelectCounterInfo'
+                    }
+                }
+            });
+
+            var datatable = $.HSCore.components.HSDatatables.init($('#datatable'), {
+                select: {
+                    style: 'multi',
+                    selector: 'td:first-child input[type="checkbox"]',
+                    classMap: {
+                        checkAll: '#datatableCheckAll',
+                        counter: '#datatableCounter',
+                        counterInfo: '#datatableCounterInfo'
+                    }
+                },
+                language: {
+                    zeroRecords: '<div class="text-center p-4">' +
+                        '<i class="far fa-exclamation-triangle fa-2x"></i>' +
+                        '<p class="mb-0">No data to show</p>' +
+                        '</div>'
+                }
+            });
+
+            $('.js-datatable-filter').on('change', function () {
+                var $this = $(this),
+                    elVal = $this.val(),
+                    targetColumnIndex = $this.data('target-column-index');
+
+                datatable.column(targetColumnIndex).search(elVal).draw();
+            });
+
+            $('#datatableSearch').on('mouseup', function (e) {
+                var $input = $(this),
+                    oldValue = $input.val();
+
+                if (oldValue == "") return;
+
+                setTimeout(function () {
+                    var newValue = $input.val();
+
+                    if (newValue == "") {
+                        // Gotcha
+                        datatable.search('').draw();
+                    }
+                }, 1);
+            });
+
+            // INITIALIZATION OF DATATABLES
+            // =======================================================
+            var datatable = $.HSCore.components.HSDatatables.init($('#exportOptionsDatatables'), {
+                dom: 'Bfrtip',
+                buttons: [
+                    {
+                        extend: 'copy',
+                        className: 'd-none'
+                    },
+                    {
+                        extend: 'excel',
+                        className: 'd-none'
+                    },
+                    {
+                        extend: 'csv',
+                        className: 'd-none'
+                    },
+                    //{
+                    //    extend: 'pdf',
+                    //    className: 'd-none'
+                    //},
+                    {
+                        extend: 'print',
+                        className: 'd-none'
+                    }
+                ]
+            });
+
+            $('#export-copy').click(() => {
+                datatable.button('.buttons-copy').trigger();
+            });
+
+            $('#export-excel').click(() => {
+                datatable.button('.buttons-excel').trigger();
+            });
+
+            $('#export-csv').click(() => {
+                datatable.button('.buttons-csv').trigger();
+            });
+
+            $('#export-pdf').click(() => {
+                datatable.button('.buttons-pdf').trigger();
+            });
+
+            $('#export-print').click(() => {
+                datatable.button('.buttons-print').trigger();
+            });
+        });
+
+    </script>
+
+    @await RenderSectionAsync("scripts", false)
+
+    <!-- IE Support -->
+    <script>
+        @{ var url = $"{Context.Request.PathBase}/front-dashboard-v1.1/dist/assets/vendor/babel-polyfill/polyfill.min.js"; }
+        if (/MSIE \d|Trident.*rv:/.test(navigator.userAgent)) document.write('<script src="@url"><\/script>');
+    </script>
+</body>
+</html>

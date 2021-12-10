@@ -1,0 +1,109 @@
+﻿@model Recipes.Models.UserViewModel;
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- ========== MAIN ========== -->
+<main id="content" role="main" class="main">
+    @{
+        var userId = @User.FindFirst("UserID").Value;
+        var createdDate = DateTime.Now;
+    }
+    <partial name="_LayoutHeader" view-data='@new ViewDataDictionary(ViewData) { { "HeadingDetails", "Administration" }, { "HeadingSubTittle", "User" }, { "HeadingSubDetails", "Create" }, { "btnIcon", "fal fa-user-tag" }}' />
+
+    <!-- End Breadcrumb Section -->
+    <!-- Content Section -->
+    <div class="content container-fluid my-n9">
+        @if (!string.IsNullOrEmpty(Model.ErrorMessage))
+        {
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <strong>
+                    @Model.ErrorMessage
+
+                </strong>
+
+            </div>
+        }
+        <form class="js-validate" method="post" asp-action="Create" asp-controller="User">
+            <div class="card">
+                <div class="card-header">
+                    <p class="card-header-title">Users </p>
+                </div>
+                <div class="card-body">
+                    <!-- Input -->
+                    <div class="row form-group">
+                        <label class="col-sm-3 col-form-label input-label">FirstName <span class="fas text-danger fa-lg mr-1">*</span></label>
+                        <div class="col-sm-4 js-form-message mb-3">
+                            <input id="FirstNameTextBox" type="text" class="form-control stringValidation" required
+                                   data-msg="Please enter a First Name." placeholder="FirstName" aria-label="Current Value" asp-for="@Model.User.FirstName">
+                        </div>
+                    </div>
+
+                    <div class="row form-group">
+                        <label class="col-sm-3 col-form-label input-label">LastName <span class="fas text-danger fa-lg mr-1">*</span></label>
+                        <div class="col-sm-4 js-form-message mb-3">
+                            <input id="LastNameTextBox" type="text" class="form-control stringValidation" required
+                                   data-msg="Please enter Last Name." placeholder="LastName" aria-label="Current Value" asp-for="@Model.User.LastName">
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <label class="col-sm-3 col-form-label input-label">UserName <span class="fas text-danger fa-lg mr-1">*</span></label>
+                        <div class="col-sm-4 js-form-message mb-3">
+                            <input id="UserNameTextBox" type="text" class="form-control stringValidation" required
+                                   data-msg="Please enter UserName." placeholder="UserName" aria-label="Current Value" asp-for="@Model.User.UserName">
+                        </div>
+                    </div>
+
+                    <div class="row form-group">
+                        <label class="col-sm-3 col-form-label input-label">Email <span class="fas text-danger fa-lg mr-1">*</span></label>
+                        <div class="col-sm-4 js-form-message mb-3">
+                            <input id="EmailTextBox" type="email" class="form-control stringValidation" required
+                                   data-msg="Please enter Email." placeholder="Email" aria-label="Current Value" asp-for="@Model.User.Email">
+                        </div>
+                    </div>
+
+                 
+                    <div class="row form-group">
+                        <label class="col-sm-3 col-form-label input-label">Role Name <span class="fas text-danger fa-lg mr-1">*</span></label>
+                        <div class="col-sm-4 js-form-message mb-3">
+                            @Html.DropDownListFor(m => m.User.RoleID, new SelectList(Model.Roles, "RoleID", "RoleName"), new
+                                            {
+                                                @class = "js-select2-custom custom-select",
+                                                size = "1",
+                                                style = "opacity: 0;"
+                                            })
+                        </div>
+                    </div>
+
+                    <div class="row form-group">
+                        <label class="col-sm-3 col-form-label input-label mr-1"><span class="fas text-danger fa-lg mr-1">*</span><span class="text-muted">indicates required</span></label>
+                    </div>
+                </div>
+                <!-- Footer -->
+
+
+                <div class="card-footer">
+                    <div class="d-flex justify-content-center align-content-end" style="margin-left: 80px;">
+                        <a class="btn btn-white " href="@Url.Action("Users", "User")">Cancel</a>
+                        <input type="submit" value="Save" class="btn btn-primary ml-2" id="btnSave" />
+
+
+                    </div>
+
+                </div>
+
+
+                <!-- End Footer -->
+                @*<input type="hidden" asp-for="@Model.Provider.CreatedByUserID" value="@userId" />
+                <input type="hidden" asp-for="@Model.Provider.CreatedOn" value="@createdDate" />*@
+
+            </div>
+
+        </form>
+    </div>
+    <!-- End Content Section -->
+</main>
+
+

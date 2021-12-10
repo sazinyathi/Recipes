@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<mvcSiteMap>
+	<mvcSiteMapNode mainTitle="Administration" icon="far fa-clipboard-list-check">
+		<mvcSiteMapSubTitle subTitle="Admin">
+			<mvcSiteMapSubTitleChild childTitle="Role" controller="Role" action="Roles" roles="Administrator" />
+			<mvcSiteMapSubTitleChild childTitle="User" controller="User" action="Users" roles="Administrator" />
+
+		</mvcSiteMapSubTitle>
+
+	</mvcSiteMapNode>
+	<mvcSiteMapNode mainTitle="Recipes" icon="far fa-clipboard-list-check">
+		<mvcSiteMapSubTitle subTitle="Recipe">
+			<mvcSiteMapSubTitleChild childTitle="Overview" controller="Role" action="Roles" roles="Administrator" />
+				</mvcSiteMapSubTitle>
+
+	</mvcSiteMapNode>
+</mvcSiteMap>

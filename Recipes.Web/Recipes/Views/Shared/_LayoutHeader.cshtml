@@ -1,0 +1,68 @@
+﻿@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+@{
+    var roles = User.FindFirst("RoleName").Value;
+    var roleList = roles.Split(',').ToList();
+
+    var headings = ViewData.ContainsKey("HeadingDetails") ? ViewData["HeadingDetails"].ToString() : string.Empty;
+    var headingSubTittle = ViewData.ContainsKey("HeadingSubTittle") ? ViewData["HeadingSubTittle"].ToString() : string.Empty;
+    var headingSubDetails = ViewData.ContainsKey("HeadingSubDetails") ? ViewData["HeadingSubDetails"].ToString() : string.Empty;
+    var hrefLink = ViewData.ContainsKey("hrefLink") ? ViewData["hrefLink"].ToString() : "#";
+    var action = ViewData.ContainsKey("action") ? ViewData["action"].ToString() : string.Empty;
+    var btnIcon = ViewData.ContainsKey("btnIcon") ? ViewData["btnIcon"].ToString() : string.Empty;
+    var btnText = ViewData.ContainsKey("btnText") ? ViewData["btnText"].ToString() : $"{action} {headingSubTittle}";
+
+    // Append the roles to the link
+    var separator = "?";
+
+    if (hrefLink.Contains("?"))
+    {
+        separator = "&";
+    }
+
+    hrefLink = $"{hrefLink}{separator}roles={roles.Replace(" ", "%20")}";
+}
+
+
+<div class="content container-fluid">
+    <!-- Page Header -->
+    <div class="js-nav-scroller hs-nav-scroller-horizontal mb-5">
+        <span class="hs-nav-scroller-arrow-prev" style="display: none;">
+            <a class="hs-nav-scroller-arrow-link" href="javascript:;">
+                <i class="tio-chevron-left"></i>
+            </a>
+        </span>
+
+        <span class="hs-nav-scroller-arrow-next" style="display: none;">
+            <a class="hs-nav-scroller-arrow-link" href="javascript:;">
+                <i class="tio-chevron-right"></i>
+            </a>
+        </span>
+
+        <ul class="nav nav-tabs align-items-center">
+            <li class="col-sm mb-2 mb-sm-0">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb breadcrumb-no-gutter">
+                        <li class="breadcrumb-item"><a class="breadcrumb-link" href="javascript:;">@headings</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">@headingSubTittle</li>
+                    </ol>
+                </nav>
+
+                <h1 class="page-header-title">@headingSubDetails</h1>
+            </li>
+
+
+            <li class="nav-item ml-auto">
+                @if (!string.IsNullOrWhiteSpace(action))
+                {
+                    <a class="btn btn-sm btn-primary mr-2" href=@hrefLink>
+                        <i class="@btnIcon mr-1"></i> @btnText
+                    </a>
+                }
+
+            </li>
+        </ul>
+
+    </div>
+    <!-- End Page Header -->
+</div>
