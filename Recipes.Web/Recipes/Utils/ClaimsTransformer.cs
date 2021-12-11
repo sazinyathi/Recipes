@@ -20,9 +20,8 @@ namespace Recipes.Utils
 
         public async Task<ClaimsPrincipal> TransformAsync(ClaimsPrincipal principal)
         {
-           
-            //_connection.GetAsync<UserInformation>(StringHelpers.Controllers.Users, $"/{sAmAccountName}/{database}");
-            var user = await UserService.FindByUsernameAsync("sazin");
+         
+            var user = await UserService.FindByUsernameAsync("sazinyathi");
             if (user == null) return principal;
 
             var ci = (ClaimsIdentity)principal.Identity;
