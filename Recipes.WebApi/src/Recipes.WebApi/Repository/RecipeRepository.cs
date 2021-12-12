@@ -35,15 +35,70 @@ namespace Recipes.WebApi.Repository
             }
         }
 
-        public Task<IEnumerable<RecipeCustomModel>> GetAllAsync()
+        public async Task<IEnumerable<RecipeCustomModel>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            await using var connection = DBConnection.GetOpenConnection(_configuration.GetConnectionString(StringHelpers.Database.Recipes));
+            var query = @"
+                           SELECT R.RecipeID AS [RecipeID], R.*,I.ImageID AS [ImageID], I.*,  ID.IngredientID AS [IngredientID], ID.* 
+	                            FROM Recipe R
+	                       INNER JOIN [Image] I ON I.RecipeID = R.RecipeID
+	                       INNER JOIN Ingredient ID ON ID.IngredientID = R.RecipeID
+	                       WHERE R.DeletedOn = NULL AND R.DeletedByUserID = NULL
+	                       ORDER BY R.RecipeID DESC
+
+                        ";
+
+            var recipes = new List<RecipeCustomModel>();
+
+            var data = connection.Query<Recipe, Image, Ingredient, List<RecipeCustomModel>>(
+                 query, (recipe, image, ingredient) =>
+                 {
+                     var model = new RecipeCustomModel
+                     {
+                         Recipe = recipe,
+                         Image = image,
+                         Ingredient = ingredient
+                     };
+
+                     recipes.Add(model);
+                     return recipes;
+                 },
+
+                 splitOn: "RecipeID, ImageID,IngredientID ", commandTimeout: 120).ToList();
+
+            return recipes;
         }
 
-        public Task<RecipeCustomModel> GetByIdAsync(int recipeId)
+        public async Task<RecipeCustomModel> GetByIdAsync(int recipeId)
         {
-            throw new NotImplementedException();
+            await using var connection = DBConnection.GetOpenConnection(_configuration.GetConnectionString(StringHelpers.Database.Recipes));
+            var query = @"
+                           SELECT R.RecipeID AS [RecipeID], R.*,I.ImageID AS [ImageID], I.*,  ID.IngredientID AS [IngredientID], ID.* 
+	                            FROM Recipe R
+	                       INNER JOIN [Image] I ON I.RecipeID = R.RecipeID
+	                       INNER JOIN Ingredient ID ON ID.IngredientID = R.RecipeID
+	                       WHERE R.DeletedOn = NULL AND R.DeletedByUserID = NULL
+	                       ORDER BY R.RecipeID DESC
+
+                        ";
+            
+           var data = connection.Query<Recipe, Image, Ingredient, RecipeCustomModel>(
+                query, (recipe, image, ingredient) =>
+                {
+                    return new RecipeCustomModel
+                    {
+                        Recipe = recipe,
+                        Image = image,
+                        Ingredient = ingredient
+                    };
+                },
+
+        splitOn: "RecipeID, ImageID,IngredientID ", commandTimeout: 120).FirstOrDefault();
+
+            return data == null ? new RecipeCustomModel() : data;
+
         }
+
 
         public async Task<bool> InsertAsyn(RecipeCustomModel recipeCustomModel)
         {
@@ -73,9 +128,28 @@ namespace Recipes.WebApi.Repository
             }
         }
 
-        public Task<bool> UpdateAsync(RecipeCustomModel recipeCustomModel)
+        public async Task<bool> UpdateAsync(RecipeCustomModel recipeCustomModel)
         {
-            throw new NotImplementedException();
+            try
+            {
+                await using var connection = DBConnection.GetOpenConnection(_configuration.GetConnectionString(StringHelpers.Database.Recipes));
+                using (var transaction = connection.BeginTransaction())
+                {
+                    _ = await connection.UpdateAsync(recipeCustomModel.Recipe);
+
+                    _ = await connection.UpdateAsync(recipeCustomModel.Ingredient);
+                    _ = await connection.UpdateAsync(recipeCustomModel.Image);
+
+                    transaction.Commit();
+                    // Return success
+                    return true;
+                }
+            }
+            catch (Exception e)
+            {
+                // Log error
+                return false;
+            }
         }
     }
 }
