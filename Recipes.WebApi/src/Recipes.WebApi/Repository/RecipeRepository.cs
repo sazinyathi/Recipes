@@ -50,16 +50,21 @@ namespace Recipes.WebApi.Repository
             try
             {
                 await using var connection = DBConnection.GetOpenConnection(_configuration.GetConnectionString(StringHelpers.Database.Recipes));
+                using (var transaction = connection.BeginTransaction())
+                {
+                    _ = await connection.InsertAsync(recipeCustomModel.Recipe);
+                    const string sql = "SELECT last_insert_rowid()";
 
-                _ = await connection.InsertAsync(recipeCustomModel.Recipe);
-                const string sql = "SELECT last_insert_rowid()";
-                var recipeID = connection.QueryFirstOrDefault<int>(sql);
-                recipeCustomModel.Ingredient.RecipeID = recipeID;
-                recipeCustomModel.Image.RecipeID = recipeID;
-                _ = await connection.InsertAsync(recipeCustomModel.Ingredient);
-                _ = await connection.InsertAsync(recipeCustomModel.Image);
-                // Return success
-                return true;
+                    var recipeID = connection.QueryFirstOrDefault<int>(sql);
+                    recipeCustomModel.Ingredient.RecipeID = recipeID;
+                    recipeCustomModel.Image.RecipeID = recipeID;
+                    _ = await connection.InsertAsync(recipeCustomModel.Ingredient);
+                    _ = await connection.InsertAsync(recipeCustomModel.Image);
+
+                    transaction.Commit();
+                    // Return success
+                    return true;
+                }
             }
             catch (Exception e)
             {
