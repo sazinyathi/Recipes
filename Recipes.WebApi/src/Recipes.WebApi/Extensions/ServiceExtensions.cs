@@ -22,6 +22,7 @@ namespace Recipes.WebApi.Extensions
         {
             services.AddTransient<IRole, RoleRepository>();
             services.AddTransient<IUser, UserRepository>();
+            services.AddTransient<IRecipe, RecipeRepository>();
            
         }
 
