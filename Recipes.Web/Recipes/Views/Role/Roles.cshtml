@@ -98,8 +98,10 @@
                                             </a>
 
                                             <div id="@item.RoleID" class="hs-unfold-content dropdown-unfold dropdown-menu dropdown-menu-sm dropdown-menu-right hs-unfold-content-initialized hs-unfold-css-animation animated hs-unfold-hidden" data-hs-target-height="145.078" data-hs-unfold-content="" data-hs-unfold-content-animation-in="slideInUp" data-hs-unfold-content-animation-out="fadeOut" style="animation-duration: 300ms;">
-                                                <a class="dropdown-item" href="@Url.Action("GetByRoleId", "Role", new { roleId = @item.RoleID})"><i class="fal fa-edit mr-2"></i>Edit</a>
-                                                @*<a href="#" data-toggle="tooltip" data-placement="top" title="Delete Provider" class="dropdown-item" onclick="createModal('@Url.Action("DeleteAccountCodePartialView", "Provider", new { providerId = @item.Provider.ProviderID })')"><i class="fad fa-trash btnEdit mr-2" style="color:red"></i>Delete</a>*@
+                                               @if (User.IsInRole("Administrator"))
+                                               {
+                                                <a class="dropdown-item" href="@Url.Action("GetByRoleId", "Role", new { roleId = @item.RoleID })"><i class="fal fa-edit mr-2"></i>Edit</a>
+                                               }
                                             </div>
                                         </div>
                                     </td>

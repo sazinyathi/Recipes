@@ -2,15 +2,15 @@
 <mvcSiteMap>
 	<mvcSiteMapNode mainTitle="Administration" icon="far fa-clipboard-list-check">
 		<mvcSiteMapSubTitle subTitle="Admin">
-			<mvcSiteMapSubTitleChild childTitle="Role" controller="Role" action="Roles" roles="Administrator" />
-			<mvcSiteMapSubTitleChild childTitle="User" controller="User" action="Users" roles="Administrator" />
+			<mvcSiteMapSubTitleChild childTitle="Role" controller="Role" action="Roles" roles="Administrator, Local User" />
+			<mvcSiteMapSubTitleChild childTitle="User" controller="User" action="Users" roles="Administrator, Local User" />
 
 		</mvcSiteMapSubTitle>
 
 	</mvcSiteMapNode>
 	<mvcSiteMapNode mainTitle="Recipes" icon="far fa-clipboard-list-check">
 		<mvcSiteMapSubTitle subTitle="Recipe">
-			<mvcSiteMapSubTitleChild childTitle="Overview" controller="Role" action="Roles" roles="Administrator" />
+			<mvcSiteMapSubTitleChild childTitle="Overview" controller="Recipe" action="Recipes" roles="Administrator, Local User" />
 				</mvcSiteMapSubTitle>
 
 	</mvcSiteMapNode>

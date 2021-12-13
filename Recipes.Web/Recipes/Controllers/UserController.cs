@@ -1,7 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Recipes.Models;
+using Recipes.Recipes.Services;
 using Recipes.Services;
 using Recipes.Utils;
+using Recipes.WebApi.Recipes.Model.Recipes.Custom;
 using Recipes.WebApi.Recipes.Model.Table;
 using System;
 using System.Collections.Generic;
@@ -10,6 +13,7 @@ using System.Threading.Tasks;
 
 namespace Recipes.Controllers
 {
+    [Authorize(Roles = "Administrator, Local User")]
     public class UserController : Controller
     {
         public async Task<IActionResult> Users()
@@ -85,5 +89,7 @@ namespace Recipes.Controllers
                           : RedirectToAction("Message", "Home", new { type = StringHelper.Types.UpdateFailed, url = redirectUrl });
 
         }
+
+        
     }
 }

@@ -1,0 +1,153 @@
+﻿@model Recipes.WebApi.Recipes.Model.Recipes.Custom.RecipeCustomModel;
+
+@{
+    ViewData["Title"] = "GetByRecipeId";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- ========== MAIN ========== -->
+<main id="content" role="main" class="main">
+    @{
+        var userId = @User.FindFirst("UserID").Value;
+        var createdDate = DateTime.Now;
+    }
+    <partial name="_LayoutHeader" view-data='@new ViewDataDictionary(ViewData) { { "HeadingDetails", "Recipes" }, { "HeadingSubTittle", "Recipe" }, { "HeadingSubDetails", "Edit" }, { "btnIcon", "fal fa-user-tag" }}' />
+
+    <!-- End Breadcrumb Section -->
+    <!-- Content Section -->
+    <div class="content container-fluid my-n9">
+        @if (!string.IsNullOrEmpty(Model.ErrorMessage))
+        {
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <strong>
+                    @Model.ErrorMessage
+
+                </strong>
+
+            </div>
+        }
+        <form class="js-validate"  method="post" asp-action="Update" asp-controller="Recipe">
+            <div class="card">
+                <div class="card-header">
+                    <p class="card-header-title">Edit Recipe </p>
+                </div>
+                <div class="card-body">
+                    <!-- Input -->
+
+                    <div class="row form-group">
+
+                        <label class="col-sm-3 col-form-label input-label">Recipe Name <span class="fas text-danger fa-lg mr-1">*</span></label>
+                        <div class="col-sm-4 js-form-message mb-3">
+                            <input id="RecipeNameTextBox" type="text" class="form-control stringValidation" required
+                                   data-msg="Please enter a Recipe Name." placeholder="RecipeName" aria-label="Current Value" asp-for="@Model.Recipe.Name" value="@Model.Recipe.Name">
+                        </div>
+                    </div>
+
+                    <div class="row form-group">
+
+                        <label class="col-sm-3 col-form-label input-label">Recipe Create Date <span class="fas text-danger fa-lg mr-1">*</span></label>
+                        <div class="col-sm-4 js-form-message mb-3">
+                            <!-- Flatpickr -->
+                            <input type="text" class="js-flatpickr form-control flatpickr-custom" required placeholder="Select dates" asp-for="@Model.Recipe.CreatedOn" value="@Model.Recipe.CreatedOn"
+                                   data-hs-flatpickr-options='{
+                                                "dateFormat": "Y/m/d"
+                                            }'>
+                            <!-- End Flatpickr -->
+                        </div>
+
+                    </div>
+
+
+                    <div class="row form-group">
+
+                        <label class="col-sm-3 col-form-label input-label">Ingredient Description <span class="fas text-danger fa-lg mr-1">*</span></label>
+                        <div class="col-sm-4 js-form-message mb-3">
+                            <input id="IngredientDescriptionTextBox" type="text" class="form-control stringValidation" required
+                                   data-msg="Please enter Ingredient Description." placeholder="IngredientDescription" aria-label="Current Value" asp-for="@Model.Ingredient.Description" value="@Model.Ingredient.Description">
+                        </div>
+
+                    </div>
+
+                    <div class="row form-group">
+                        <label class="col-sm-3 col-form-label input-label">Recipe Image <span class="fas text-danger fa-lg mr-1">*</span></label>
+                        <div class="col-sm-4 js-form-message mb-3">
+                            @{
+                                var base64 = Convert.ToBase64String(Model.Image.ImageData);
+                                var Image = String.Format("data:image/gif;base64,{0}", base64);
+                            }
+
+                            <div class="d-flex align-items-center">
+                                <div class="list-group-item">
+                                    <div class="row align-items-center">
+                                        <div class="col-auto">
+                                            <span class="avatar avatar-xxl step-avatar-img">
+                                                <img class="avatar-img" src="@Image" alt="Image Description">
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Footer -->
+                    </div>
+
+                    <div class="card-footer">
+                        <div class="d-flex justify-content-center align-content-end">
+                            <a class="btn btn-white " href="@Url.Action("Recipes", "Recipe")">Cancel</a>
+                            <input type="submit" value="Save" class="btn btn-primary ml-2" id="btnSave" />
+
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- End Footer -->
+                    @Html.HiddenFor(model => model.Recipe.RecipeID)
+                    @Html.HiddenFor(model => model.Recipe.CreateByUserID)
+                    @Html.HiddenFor(model => model.Recipe.DeletedByUserID)
+                    @Html.HiddenFor(model => model.Recipe.DeletedOn)
+                    @Html.HiddenFor(model => model.Recipe.Name)
+                    @Html.HiddenFor(model => model.Image.ImageID)
+                    @Html.HiddenFor(model => model.Image.ImageData)
+                    @Html.HiddenFor(model => model.Image.ImageExtension)
+                    @Html.HiddenFor(model => model.Image.RecipeID)
+                    @Html.HiddenFor(model => model.Image.RecipeID)
+                    @Html.HiddenFor(model => model.Image.ImageName)
+                    @Html.HiddenFor(model => model.Ingredient.IngredientID)
+                    @Html.HiddenFor(model => model.Ingredient.RecipeID)
+                    @Html.HiddenFor(model => model.Ingredient.CreateByUserID)
+                    @Html.HiddenFor(model => model.Ingredient.CreatedOn)
+                    @Html.HiddenFor(model => model.Ingredient.DeletedByUserID)
+                    @Html.HiddenFor(model => model.Ingredient.DeletedOn)
+                    @Html.HiddenFor(model => model.Ingredient.Description)
+                 
+                    <input type="hidden" asp-for="@Model.Recipe.CreateByUserID" value="@userId" />
+                    <input type="hidden" asp-for="@Model.Recipe.CreatedOn" value="@createdDate" />
+                    <input type="hidden" asp-for="@Model.Ingredient.CreatedOn" value="@createdDate" />
+                    <input type="hidden" asp-for="@Model.Ingredient.CreateByUserID" value="@userId" />
+
+                </div>
+            </div>
+        </form>
+    </div>
+    <!-- End Content Section -->
+</main>
+@section scripts {
+    <!-- JS Plugins Init. -->
+    <script src="~/front-dashboard-v1.1/dist/assets/vendor/hs-file-attach/dist/hs-file-attach.min.js"></script>
+    <script src="~/front-dashboard-v1.1/dist/assets/vendor/flatpickr/dist/flatpickr.min.js"></script>
+    <script src="~/front-dashboard-v1.1/src/assets/js/hs.flatpickr.js"></script>
+    <script>
+        $(document).on('ready', function () {
+            // INITIALIZATION OF CUSTOM FILE
+            // =======================================================
+            $('.js-file-attach').each(function () {
+                var customFile = new HSFileAttach($(this)).init();
+            });
+        });
+    </script>
+
+
+}
+

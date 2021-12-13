@@ -39,11 +39,11 @@ namespace Recipes.WebApi.Repository
         {
             await using var connection = DBConnection.GetOpenConnection(_configuration.GetConnectionString(StringHelpers.Database.Recipes));
             var query = @"
-                           SELECT R.RecipeID AS [RecipeID], R.*,I.ImageID AS [ImageID], I.*,  ID.IngredientID AS [IngredientID], ID.* 
+                          SELECT R.RecipeID AS [RecipeID], R.*,I.ImageID AS [ImageID], I.*,  ID.IngredientID AS [IngredientID], ID.* 
 	                            FROM Recipe R
 	                       INNER JOIN [Image] I ON I.RecipeID = R.RecipeID
 	                       INNER JOIN Ingredient ID ON ID.IngredientID = R.RecipeID
-	                       WHERE R.DeletedOn = NULL AND R.DeletedByUserID = NULL
+	                       WHERE R.DeletedOn IS NULL AND R.DeletedByUserID IS NULL
 	                       ORDER BY R.RecipeID DESC
 
                         ";
@@ -77,7 +77,7 @@ namespace Recipes.WebApi.Repository
 	                            FROM Recipe R
 	                       INNER JOIN [Image] I ON I.RecipeID = R.RecipeID
 	                       INNER JOIN Ingredient ID ON ID.IngredientID = R.RecipeID
-	                       WHERE R.DeletedOn = NULL AND R.DeletedByUserID = NULL
+	                       WHERE R.DeletedOn IS NULL AND R.DeletedByUserID IS NULL
 	                       ORDER BY R.RecipeID DESC
 
                         ";

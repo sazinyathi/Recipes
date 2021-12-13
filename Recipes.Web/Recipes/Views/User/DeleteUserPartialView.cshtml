@@ -19,7 +19,9 @@
 
         <div class="d-flex justify-content-end">
             <button type="button" class="btn btn-white mr-2" data-dismiss="modal">Cancel</button>
+@if (User.IsInRole("Administrator")) { 
             <input type="submit" value="Delete" class="btn btn-danger" />
+            }
         </div>
 
     </div>

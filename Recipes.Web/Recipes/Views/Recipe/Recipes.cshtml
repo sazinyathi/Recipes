@@ -1,0 +1,144 @@
+﻿@model IEnumerable<Recipes.WebApi.Recipes.Model.Recipes.Custom.RecipeCustomModel>
+
+@{
+    ViewData["Title"] = "Roles";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    int height;
+}
+
+<main id="content" role="main" class="main">
+    <!-- Breadcrumb Section -->
+    <partial name="_LayoutHeader" view-data='@new ViewDataDictionary(ViewData) { { "HeadingDetails", "Administrator" },{ "HeadingSubTittle", "Recipe" },{ "HeadingSubDetails", "Overview" },{ "hrefLink", @Url.Action("Create", "Recipe") },{ "action", "Create" },{ "btnIcon", "fal fa-user-tag" } }' />
+    <!-- End Breadcrumb Section -->
+    <!-- Content Section -->
+
+
+    <div class="content container-fluid my-n9">
+        <div class="tab-content" id="profileTeamsTabContent">
+            <div class="tab-pane fade show active" id="grid" role="tabpanel" aria-labelledby="grid-tab">
+                <!-- Teams -->
+
+                <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3">
+                    @foreach (var item in Model)
+                    {
+                        <div class="col mb-3 mb-lg-5">
+
+                            <!-- Card -->
+                            <div class="card h-100">
+                                <!-- Body -->
+                                <div class="card-body pb-0">
+                                    <div class="row align-items-center mb-2">
+                                        <div class="col-9">
+                                            <h4 class="mb-1">
+                                                <a href="#">@item.Recipe.Name</a>
+                                            </h4>
+                                        </div>
+                                        @if (User.IsInRole("Administrator"))
+                                        {
+
+
+                                            <div class="col-3 text-right">
+                                                <!-- Unfold -->
+                                                <div class="hs-unfold">
+                                                    <a class="js-hs-unfold-invoker btn btn-icon btn-sm btn-ghost-secondary rounded-circle" href="javascript:;" data-hs-unfold-options="{
+                                   &quot;target&quot;: &quot;#teamsDropdown1&quot;,
+                                   &quot;type&quot;: &quot;css-animation&quot;
+                                 }" data-hs-unfold-target="#teamsDropdown1" data-hs-unfold-invoker="">
+                                                        <i class="tio-more-vertical"></i>
+                                                    </a>
+
+                                                    <div id="teamsDropdown1" class="hs-unfold-content dropdown-unfold dropdown-menu dropdown-menu-sm dropdown-menu-right hs-unfold-hidden hs-unfold-content-initialized hs-unfold-css-animation animated hs-unfold-reverse-y" data-hs-target-height="147.667" data-hs-unfold-content="" data-hs-unfold-content-animation-in="slideInUp" data-hs-unfold-content-animation-out="fadeOut" style="animation-duration: 300ms;">
+
+                                                        <a class="dropdown-item" href="@Url.Action("GetByRecipeId", "Recipe", new { recipeId = item.Recipe.RecipeID })">Edit Recipe</a>
+                                                        <div class="dropdown-divider"></div>
+                                                        <a class="dropdown-item text-danger" href="#">Delete</a>
+                                                    </div>
+                                                </div>
+                                                <!-- End Unfold -->
+                                            </div>
+                                            }
+                                    </div>
+                                    <!-- End Row -->
+
+
+                                </div>
+                                <!-- End Body -->
+                                <!-- Footer -->
+                                <div class="card-footer border-0 pt-0">
+                                    <div class="list-group list-group-flush list-group-no-gutters">
+                                        @{
+                                            var base64 = Convert.ToBase64String(@item.Image.ImageData);
+                                            var Image = String.Format("data:image/gif;base64,{0}", base64);
+                                        }
+                                        <!-- List Item -->
+                                        <div class="list-group-item">
+                                            <div class="row align-items-center ">
+                                                 <div class="col-auto">
+                                                    <span class="avatar avatar-xxl step-avatar-img" >
+                                                        <img class="avatar-img" src="@Image" alt="Image Description">
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- End List Item -->
+                                        <!-- List Item -->
+                                        <div class="list-group-item">
+                                            <div class="row align-items-center">
+                                                <div class="col">
+                                                    <small class="card-subtitle">Recipe:</small>
+                                                </div>
+                                                <div class="col-auto">
+                                                    <a class="badge badge-soft-primary p-2" href="#">@item.Recipe.Name</a>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <!-- End List Item -->
+                                        <!-- List Item -->
+                                        <div class="list-group-item">
+                                            <div class="row align-items-center">
+                                                <div class="col">
+                                                    <small class="card-subtitle">Ingredient:</small>
+                                                </div>
+                                                <div class="col-auto">
+                                                    <a class="badge badge-soft-primary p-2" href="#">@item.Ingredient.Description</a>
+                                                </div>
+
+
+                                            </div>
+                                        </div>
+                                        <!-- End List Item -->
+                                    </div>
+                                </div>
+                                <!-- End Footer -->
+                            </div>
+                            <!-- End Card -->
+
+
+                        </div>
+                    }
+
+                    @if (Model.Count() > 6 && User.IsInRole("Administrator"))
+                    {
+                        <a class="btn btn-white" style="width:600px; align-content:center;" href="@Url.Action("Recipes", "Recipe")">Load More Recipes</a>
+                    }
+
+
+                </div>
+
+
+                <!-- End Teams -->
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+
+</main>
+
+
+

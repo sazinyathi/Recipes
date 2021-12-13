@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Recipes.Models;
 using Recipes.Services;
 using Recipes.Utils;
@@ -9,32 +10,24 @@ namespace Recipes.Controllers
 {
     public class RoleController : Controller
     {
+        [Authorize(Roles = "Administrator, Local User")]
         public async Task<IActionResult> Roles()
         {
             var providers = await RoleService.GetAllAsync();
             return View(providers);
         }
 
+        [Authorize(Roles = "Administrator")]
         public IActionResult Create()
         {
             return View(new RoleViewModel());
         }
 
-
+        [Authorize(Roles = "Administrator")]
         [HttpPost]
         public async Task<IActionResult> Create(RoleViewModel roleViewModel)
         {
-            //var isNameExists = await ProviderService.IsProviderNameExists(providerViewModel.Provider.Name);
-            //if (isNameExists)
-            //{
-            //    var model = new ProviderViewModel
-            //    {
-            //        Seta = await LookUpCodesService.LookUpCodesByCategoryIDAsync(93),
-            //        ErrorMessage = $"{providerViewModel.Provider.Name} exists on database",
-            //        Provider = providerViewModel.Provider
-            //    };
-            //    return View("Create", model);
-            //}
+            
             var result = await RoleService.InsertAsync(roleViewModel.Role);
 
             var redirectUrl = $"/Role/Roles";
@@ -43,8 +36,8 @@ namespace Recipes.Controllers
 
         }
 
+        [Authorize(Roles = "Administrator")]
         [HttpPost]
-
         public async Task<IActionResult> Update(RoleViewModel roleViewModel)
         {
             var result = await RoleService.UpdateAsync(roleViewModel.Role);
@@ -66,6 +59,7 @@ namespace Recipes.Controllers
             return View(model);
         }
 
+        [Authorize(Roles = "Administrator")]
         [HttpPost]
         public async Task<IActionResult> DeleteRole(Role role)
         {

@@ -17,9 +17,14 @@ namespace Recipes.Utils
 
         public async Task<ClaimsPrincipal> TransformAsync(ClaimsPrincipal principal)
         {
-         
-            var user = await UserService.FindByUsernameAsync("sazinyathi");
-            if (user == null) return principal;
+            var loginUser = principal.Identity.Name;
+            var user = await UserService.FindByUsernameAsync(loginUser);
+            // Switch by Config Logins
+            if (user == null)
+            {
+                var adminLogin = _configuration.GetSection("Logins").GetSection("AdminLogin").Value;
+                user = await UserService.FindByUsernameAsync(adminLogin);
+            }
 
             var ci = (ClaimsIdentity)principal.Identity;
             ci.AddClaim(new Claim("UserID", user.UserID.ToString()));

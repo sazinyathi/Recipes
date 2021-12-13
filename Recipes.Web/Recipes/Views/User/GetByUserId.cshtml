@@ -115,12 +115,14 @@
                 </div>
                 <!-- Footer -->
 
-
+                
                 <div class="card-footer">
                     <div class="d-flex justify-content-center align-content-end" style="margin-left: 80px;">
                         <a class="btn btn-white " href="@Url.Action("Users", "User")">Cancel</a>
+                        @if (User.IsInRole("Administrator"))
+                        {
                         <input type="submit" value="Save" class="btn btn-primary ml-2" id="btnSave" />
-
+                        }
 
                     </div>
 

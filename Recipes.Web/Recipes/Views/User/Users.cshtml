@@ -115,9 +115,11 @@
                                         </a>
 
                                         <div id="@item.UserID" class="hs-unfold-content dropdown-unfold dropdown-menu dropdown-menu-sm dropdown-menu-right hs-unfold-content-initialized hs-unfold-css-animation animated hs-unfold-hidden" data-hs-target-height="145.078" data-hs-unfold-content="" data-hs-unfold-content-animation-in="slideInUp" data-hs-unfold-content-animation-out="fadeOut" style="animation-duration: 300ms;">
-                                            <a class="dropdown-item" href="@Url.Action("GetByUserId", "User", new { userId = @item.UserID})"><i class="fal fa-edit mr-2"></i>Edit</a>
-                                         
-                                        </div>
+                                            @if (User.IsInRole("Administrator"))
+                                            {
+                                                <a class="dropdown-item" href="@Url.Action("GetByUserId", "User", new { userId = @item.UserID })"><i class="fal fa-edit mr-2"></i>Edit</a>
+                                            }
+                                            </div>
                                     </div>
                                 </td>
                             </tr>

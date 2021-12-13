@@ -26,6 +26,7 @@
 
             </div>
         }
+        @if (User.IsInRole("Administrator")) { 
         <form class="js-validate" method="post" asp-action="Create" asp-controller="User">
             <div class="card">
                 <div class="card-header">
@@ -102,6 +103,17 @@
             </div>
 
         </form>
+        }
+            else
+            {
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <strong>
+                    Only Administrators can create User...
+
+                </strong>
+
+            </div>
+            }
     </div>
     <!-- End Content Section -->
 </main>
