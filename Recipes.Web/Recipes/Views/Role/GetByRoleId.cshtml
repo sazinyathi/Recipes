@@ -22,7 +22,7 @@
                 </div>
 
                 <div class="col-sm-auto">
-                    <button class="btn btn-ghost-danger mr-1" onclick="createModal('@Url.Action("DeleteRolePartialView", "Provider", new { roledId = @Model.Role.RoleID })')"><i class="fad fa-trash btnEdit mr-1" style="color:red"></i> Delete</button>
+                    <button class="btn btn-soft-danger mr-1" onclick="createModal('@Url.Action("DeleteRolePartialView", "Provider", new { roledId = @Model.Role.RoleID })')"><i class="fad fa-trash btnEdit mr-1" style="color:red"></i> Delete</button>
                 </div>
             </div>
             <!-- End Row -->
@@ -95,8 +95,8 @@
                 <!-- End Footer -->
                 @Html.HiddenFor(model => model.Role.RoleID)
 
-                @*@Html.HiddenFor(model => model.Role.CreatedByUserID)
-                  @Html.HiddenFor(model => model.Role.CreatedOn)*@
+                @Html.HiddenFor(model => model.Role.CreatedByUserID)
+                @Html.HiddenFor(model => model.Role.CreatedOn)
 
 
             </div>

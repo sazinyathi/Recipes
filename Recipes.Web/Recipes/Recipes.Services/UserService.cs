@@ -36,7 +36,7 @@ namespace Recipes.Services
         }
         public static async Task<bool> DeleteAsync(User user)
         {
-            return await RestApiHelper.PutAsync(new Uri(UrlHelper.Api.RecipesApi, $"{url}{UrlHelper.Controller.Role}DeleteAsync"), user);
+            return await RestApiHelper.PutAsync(new Uri(UrlHelper.Api.RecipesApi, $"{url}{UrlHelper.Controller.User}DeleteAsync"), user);
         }
 
     }

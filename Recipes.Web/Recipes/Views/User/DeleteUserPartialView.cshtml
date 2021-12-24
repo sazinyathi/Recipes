@@ -1,30 +1,43 @@
 ﻿@model Recipes.Models.UserViewModel;
-
 <!-- Edit Card Modal -->
+@{
+    var deleteUserId = @User.FindFirst("UserID").Value;
+    var deletedOn = DateTime.Now;
+}
+
 @using (Html.BeginForm("DeleteUser", "User", FormMethod.Post))
 {
-    <div class="modal-body">
+<div class="modal-body">
 
-        <!-- Form Group -->
-        <div class="form-group">
-            <label for="editCardNameLabel" class="input-label">FirstName</label>
-            @Html.DisplayFor(x => x.User.FirstName, new { @class = "form-control", @readonly = "readonly" })
-        </div>
-
-
-
-        @Html.HiddenFor(x => x.User.UserID)
-
-
-
-        <div class="d-flex justify-content-end">
-            <button type="button" class="btn btn-white mr-2" data-dismiss="modal">Cancel</button>
-@if (User.IsInRole("Administrator")) { 
-            <input type="submit" value="Delete" class="btn btn-danger" />
-            }
-        </div>
-
+    <!-- Form Group -->
+    <div class="form-group">
+        <label for="editCardNameLabel" class="input-label">FirstName</label>
+        @Html.DisplayFor(x => x.User.FirstName, new { @class = "form-control", @readonly = "readonly" })
     </div>
+
+    @Html.HiddenFor(x => x.User.UserID)
+    @Html.HiddenFor(x => x.User.CreatedByUserID)
+    @Html.HiddenFor(x => x.User.CreatedOn)
+    @Html.HiddenFor(x => x.User.Email)
+    @Html.HiddenFor(x => x.User.FirstName)
+    @Html.HiddenFor(x => x.User.LastName)
+    @Html.HiddenFor(x => x.User.RoleID)
+    @Html.HiddenFor(x => x.User.UserName)
+
+    <!-- End Footer -->
+    <input type="hidden" asp-for="@Model.User.DeletedByUserID" value="@deleteUserId" />
+    <input type="hidden" asp-for="@Model.User.DeletedOn" value="@deletedOn" />
+
+
+    <div class="d-flex justify-content-end">
+        <button type="button" class="btn btn-white mr-2" data-dismiss="modal">Cancel</button>
+        @if (User.IsInRole("Administrator"))
+        {
+            <input type="submit" value="Delete" class="btn btn-danger" />
+        }
+    </div>
+
+</div>
 
     <!-- End Body -->
     <!-- End Edit Card Modal -->

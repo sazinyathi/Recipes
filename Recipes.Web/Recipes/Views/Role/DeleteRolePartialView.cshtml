@@ -1,25 +1,32 @@
 ﻿@model Recipes.Models.RoleViewModel;
-
 <!-- Edit Card Modal -->
+@{
+    var deleteUserId = @User.FindFirst("UserID").Value;
+    var deletedOn = DateTime.Now;
+}
 @using (Html.BeginForm("DeleteRole", "Role", FormMethod.Post))
 {
-    <div class="modal-body">
+<div class="modal-body">
 
-        <!-- Form Group -->
-        <div class="form-group">
-            <label for="editCardNameLabel" class="input-label">Role Name</label>
-            @Html.DisplayFor(x => x.Role.RoleName, new { @class = "form-control", @readonly = "readonly" })
-        </div>
-        @Html.HiddenFor(x => x.Role.RoleID)
-        @Html.HiddenFor(x => x.Role.RoleName)
-    
-
-        <div class="d-flex justify-content-end">
-            <button type="button" class="btn btn-white mr-2" data-dismiss="modal">Cancel</button>
-            <input type="submit" value="Delete" class="btn btn-danger" />
-        </div>
-
+    <!-- Form Group -->
+    <div class="form-group">
+        <label for="editCardNameLabel" class="input-label">Role Name</label>
+        @Html.DisplayFor(x => x.Role.RoleName, new { @class = "form-control", @readonly = "readonly" })
     </div>
+    @Html.HiddenFor(x => x.Role.RoleID)
+    @Html.HiddenFor(x => x.Role.RoleName)
+    @Html.HiddenFor(x => x.Role.CreatedByUserID)
+    @Html.HiddenFor(x => x.Role.CreatedOn)
+    <!-- End Footer -->
+    <input type="hidden" asp-for="@Model.Role.DeletedByUserID" value="@deleteUserId" />
+    <input type="hidden" asp-for="@Model.Role.DeletedOn" value="@deletedOn" />
+
+    <div class="d-flex justify-content-end">
+        <button type="button" class="btn btn-white mr-2" data-dismiss="modal">Cancel</button>
+        <input type="submit" value="Delete" class="btn btn-danger" />
+    </div>
+
+</div>
 
     <!-- End Body -->
     <!-- End Edit Card Modal -->

@@ -51,7 +51,7 @@
                            data-hs-datatables-options='{
                      "order": [0, "desc"],
                      "columnDefs": [ {
-                            "targets": 1,
+                            "targets": 2,
                             "orderable": false
                      } ],
                      "info": {
@@ -67,6 +67,7 @@
                         <thead class="thead-light">
                             <tr>
                                 <th>Role Name</th>
+                                <th>Created On</th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -74,38 +75,41 @@
                             @foreach (var item in Model)
                             {
 
-                                <tr class="">
+                            <tr class="">
 
-                                    <td class="align-middle">
-                                        <a class="d-flex align-items-center">
-                                            <div class="avatar avatar-sm avatar-soft-success avatar-circle mr-3">
-                                                <span class="avatar-initials">@item.RoleName.Substring(0, 1)</span>
-                                            </div>
-                                            <div class="ml-3">
-                                                <span class="d-block h5  mb-0">@item.RoleName</span>
-                                            </div>
-                                        </a>
-                                    </td>
+                                <td class="align-middle">
+                                    <a class="d-flex align-items-center">
+                                        <div class="avatar avatar-sm avatar-soft-success avatar-circle mr-3">
+                                            <span class="avatar-initials">@item.RoleName.Substring(0, 1)</span>
+                                        </div>
+                                        <div class="ml-3">
+                                            <span class="d-block h5  mb-0">@item.RoleName</span>
+                                        </div>
+                                    </a>
+                                </td>
+                                <td>
+                                    <span class="d-block h5 mb-0">@item.CreatedOn.ToString("dd MMMM yyyy")</span>
+                                    <span class="d-block font-size-sm">@item.CreatedOn.ToString("hh:mm:tt")</span>
+                                </td>
 
-
-                                    <td class="align-middle">
-                                        <div class="hs-unfold">
-                                            <a class="js-hs-unfold-invoker btn btn-sm btn-white" href="javascript:;" data-hs-unfold-options="{
+                                <td class="align-middle">
+                                    <div class="hs-unfold">
+                                        <a class="js-hs-unfold-invoker btn btn-sm btn-white" href="javascript:;" data-hs-unfold-options="{
                                             &quot;target&quot;: &quot;#@item.RoleID&quot;,
                                             &quot;type&quot;: &quot;css-animation&quot;
                                         }" data-hs-unfold-target="#@item.RoleID" data-hs-unfold-invoker="">
-                                                Actions <i class="tio-chevron-down ml-1"></i>
-                                            </a>
+                                            Actions <i class="tio-chevron-down ml-1"></i>
+                                        </a>
 
-                                            <div id="@item.RoleID" class="hs-unfold-content dropdown-unfold dropdown-menu dropdown-menu-sm dropdown-menu-right hs-unfold-content-initialized hs-unfold-css-animation animated hs-unfold-hidden" data-hs-target-height="145.078" data-hs-unfold-content="" data-hs-unfold-content-animation-in="slideInUp" data-hs-unfold-content-animation-out="fadeOut" style="animation-duration: 300ms;">
-                                               @if (User.IsInRole("Administrator"))
-                                               {
+                                        <div id="@item.RoleID" class="hs-unfold-content dropdown-unfold dropdown-menu dropdown-menu-sm dropdown-menu-right hs-unfold-content-initialized hs-unfold-css-animation animated hs-unfold-hidden" data-hs-target-height="145.078" data-hs-unfold-content="" data-hs-unfold-content-animation-in="slideInUp" data-hs-unfold-content-animation-out="fadeOut" style="animation-duration: 300ms;">
+                                            @if (User.IsInRole("Administrator"))
+                                            {
                                                 <a class="dropdown-item" href="@Url.Action("GetByRoleId", "Role", new { roleId = @item.RoleID })"><i class="fal fa-edit mr-2"></i>Edit</a>
-                                               }
-                                            </div>
+                                            }
                                         </div>
-                                    </td>
-                                </tr>
+                                    </div>
+                                </td>
+                            </tr>
                             }
                         </tbody>
                     </table>
@@ -117,10 +121,10 @@
                 <!-- Pagination -->
                 <div class="row justify-content-center justify-content-sm-between align-items-sm-center">
                     <div class="col-sm mb-2 mb-sm-0">
-                        <!--<div class="d-flex justify-content-center justify-content-sm-start align-items-center">
-                        <span class="mr-2">Showing:</span>-->
-                        @*Select*@
-                        <!--<select id="datatableEntries" class="js-select2-custom"
+                        <div class="d-flex justify-content-center justify-content-sm-start align-items-center">
+                        <span class="mr-2">Showing:</span>
+                       
+                        <select id="datatableEntries" class="js-select2-custom"
                                       data-hs-select2-options='{
                           "minimumResultsForSearch": "Infinity",
                           "customClass": "custom-select custom-select-sm custom-select-borderless",
@@ -131,12 +135,12 @@
                                   <option value="6">6</option>
                                   <option value="8" selected>8</option>
                                   <option value="12">12</option>
-                              </select>-->
-                        @*End Select*@
-                        <!--<span class="text-secondary mr-2">of</span>-->
-                        @*Pagination Quantity*@
-                        <!--<span id="datatableWithPaginationInfoTotalQty"></span>
-                        </div>-->
+                              </select>
+                       
+                        <span class="text-secondary mr-2">of</span>
+                       
+                        <span id="datatableWithPaginationInfoTotalQty"></span>
+                        </div>
                     </div>
 
                     <div class="col-sm-auto">

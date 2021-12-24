@@ -38,7 +38,7 @@ namespace Recipes.WebApi.Repository
         public async Task<IEnumerable<Role>> GetAllAsync()
         {
             await using var connection = DBConnection.GetOpenConnection(_configuration.GetConnectionString(StringHelpers.Database.Recipes));
-            return connection.Query<Role>(@"SELECT * FROM Role ORDER BY [RoleID] DESC").ToList();
+            return connection.Query<Role>(@"SELECT * FROM Role WHERE DeletedOn IS NULL AND DeletedByUserID IS NULL ORDER BY [RoleID] DESC").ToList();
         }
 
         public async Task<Role> GetByIdAsync(int roleId)
@@ -52,6 +52,7 @@ namespace Recipes.WebApi.Repository
         {
             try
             {
+            
                 await using var connection = DBConnection.GetOpenConnection(_configuration.GetConnectionString(StringHelpers.Database.Recipes));
 
                 _ = await connection.InsertAsync(role);

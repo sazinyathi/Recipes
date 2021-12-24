@@ -45,7 +45,7 @@ namespace Recipes.WebApi.Repository
         public async Task<IEnumerable<User>> GetAllAsync()
         {
             await using var connection = DBConnection.GetOpenConnection(_configuration.GetConnectionString(StringHelpers.Database.Recipes));
-            return connection.Query<User>(@"SELECT * FROM User ORDER BY [UserID] DESC").ToList();
+            return connection.Query<User>(@"SELECT * FROM User WHERE DeletedOn IS NULL AND DeletedByUserID IS NULL ORDER BY [UserID] DESC").ToList();
         }
 
         public async Task<User> GetByIdAsync(int userId)
