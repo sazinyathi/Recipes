@@ -8,7 +8,7 @@
 		</mvcSiteMapSubTitle>
 
 	</mvcSiteMapNode>
-	<mvcSiteMapNode mainTitle="Recipes" icon="far fa-clipboard-list-check">
+	<mvcSiteMapNode mainTitle="Recipes" icon="fas fa-receipt">
 		<mvcSiteMapSubTitle subTitle="Recipe">
 			<mvcSiteMapSubTitleChild childTitle="Overview" controller="Recipe" action="Recipes" roles="Administrator, Local User" />
 				</mvcSiteMapSubTitle>
